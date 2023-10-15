@@ -7,14 +7,14 @@ body {
 
 #cashier-interface {
     background-color: #ffffff;
-    margin: 20px;
-    padding: 20px;
+    margin: 10px;
+    padding: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 #item-list {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 #item-list ul {
@@ -27,7 +27,7 @@ body {
 }
 
 #total-price {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 10px;
 }
@@ -35,7 +35,7 @@ body {
 #barcode-input {
     width: 100%;
     padding: 10px;
-    font-size: 16px;
+    font-size: 14px;
     margin-bottom: 10px;
 }
 
@@ -68,7 +68,7 @@ body {
 }
 
 #quick-access {
-    margin-top: 20px;
+    margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -90,7 +90,7 @@ body {
 }
 
 #control-buttons {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 #clear-all-button, #remove-last-order-button {
@@ -107,4 +107,16 @@ body {
 
 #clear-all-button:hover, #remove-last-order-button:hover {
     background-color: #C0392B; /* Darker red on hover */
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+    #cashier-interface {
+        margin: 5px;
+        padding: 5px;
+    }
+
+    #scan-button, #checkout-button, .quick-button, #clear-all-button, #remove-last-order-button {
+        padding: 5px 10px;
+    }
 }
