@@ -1,6 +1,7 @@
 const video = document.getElementById('webcam');
 const totalDisplay = document.getElementById('total');
 const itemList = document.getElementById('item-list');
+const beep = document.getElementById('beep');
 
 let total = 0;
 
@@ -25,6 +26,7 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 const itemName = getItemNameByBarcode(barcode);
                 if (itemName) {
                     addItem(itemName, getItemPrice(itemName));
+                    playBeepSound(); // Play beep sound
                 }
             });
 
@@ -40,8 +42,8 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 function getItemNameByBarcode(barcode) {
     // Simulated product database
     const products = {
-        '1234567890123': 'cat food',
-        '9876543210987': 'dog food',
+        '1234567890123': 'Product 1',
+        '9876543210987': 'Product 2',
         // Add more products as needed
     };
 
@@ -51,8 +53,8 @@ function getItemNameByBarcode(barcode) {
 function getItemPrice(itemName) {
     // Simulated price lookup
     const prices = {
-        'cat food': 2.99,
-        'dog food': 1.99,
+        'Product 1': 2.99,
+        'Product 2': 1.99,
         // Add more prices as needed
     };
 
@@ -65,4 +67,8 @@ function addItem(itemName, itemPrice) {
     itemList.appendChild(li);
     total += itemPrice;
     totalDisplay.innerText = total.toFixed(2);
+}
+
+function playBeepSound() {
+    beep.play();
 }
