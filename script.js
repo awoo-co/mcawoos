@@ -51,3 +51,4 @@ function resetGame() {
     customerNameInput.value = '';
     updateUI();
 }
+    

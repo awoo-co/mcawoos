@@ -53,6 +53,30 @@ body {
     background-color: #2980b9;
 }
 
+/* Barcode input style */
+#barcode-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Scan button style */
+#scan-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#scan-button:hover {
+    background-color: #45a049;
+}
+
+
 #quick-access {
     margin-top: 20px;
     display: flex;
