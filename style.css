@@ -89,3 +89,24 @@ body {
 .quick-button:hover {
     background-color: #2980b9;
 }
+
+
+#control-buttons {
+    margin-top: 20px;
+}
+
+#clear-all-button, #remove-last-order-button {
+    background-color: #E74C3C; /* Red color */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#clear-all-button:hover, #remove-last-order-button:hover {
+    background-color: #C0392B; /* Darker red on hover */
+}
