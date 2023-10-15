@@ -18,14 +18,13 @@ async function initCamera() {
     } catch (error) {
         console.error("Error accessing the webcam:", error);
     }
-}
 
-const codeReader = new ZXing.BrowserQRCodeReader();
+    const codeReader = new ZXing.BrowserQRCodeReader();
 
-codeReader.getVideoInputDevices()
-    .then(devices => {
+    try {
+        const devices = await codeReader.listVideoInputDevices();
         if (devices.length > 0) {
-            codeReader.decodeFromVideoDevice(devices[0].deviceId, 'webcam', (result, err) => {
+            codeReader.decodeFromVideoDevice(devices[0].deviceId, 'webcam', (result, error) => {
                 if (result) {
                     const barcode = result.text;
                     const itemName = getItemNameByBarcode(barcode);
@@ -34,14 +33,16 @@ codeReader.getVideoInputDevices()
                         playBeepSound(); // Play a beep sound
                     }
                 } else {
-                    console.error("Barcode scanning error:", err);
+                    console.error("Barcode scanning error:", error);
                 }
             });
         } else {
             console.error("No video input devices found.");
         }
-    })
-    .catch(err => console.error("Error accessing video input devices:", err));
+    } catch (error) {
+        console.error("Error accessing video input devices:", error);
+    }
+}
 
 function getItemNameByBarcode(barcode) {
     // Simulated product database
@@ -81,3 +82,5 @@ function classifyItem(category) {
     // Add code to classify the currently scanned item as "vegetable" or "fruit"
     // You can update the UI or perform further actions based on the classification.
 }
+
+initCamera();
