@@ -1,29 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
-    const codeInput = document.getElementById('code-input');
-    const saveCodeButton = document.getElementById('save-code-button');
-    const loadCodeButton = document.getElementById('load-code-button');
-
-    // Load the code from localStorage when the page loads
-    const savedCode = localStorage.getItem('savedCode');
-    if (savedCode) {
-        codeInput.value = savedCode;
-    }
-
-    saveCodeButton.addEventListener('click', function () {
-        const code = codeInput.value;
-        localStorage.setItem('savedCode', code);
-        alert('Code saved to localStorage.');
-    });
-
-    loadCodeButton.addEventListener('click', function () {
-        const savedCode = localStorage.getItem('savedCode');
-        if (savedCode) {
-            codeInput.value = savedCode;
-            alert('Code loaded from localStorage.');
-        } else {
-            alert('No code found in localStorage.');
-        }
-    });
+document.addEventListener('DOMContentLoaded', function() {
+    loadScannedItems(); // Load previously scanned items on page load
+    updateUI();
 });
 
 const scannedItems = [];
@@ -56,6 +33,7 @@ function updateUI() {
     const totalElement = document.getElementById('total-price');
     itemList.innerHTML = '<ul>' + scannedItems.map(item => `<li>${item.name}: $${item.price.toFixed(2)}</li>`).join('') + '</ul>';
     totalElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+    saveScannedItems(); // Save scanned items to local storage when the UI is updated
 }
 
 function clearAllItems() {
@@ -77,4 +55,22 @@ function resetGame() {
     totalPrice = 0;
     customerNameInput.value = '';
     updateUI();
+}
+
+function saveScannedItems() {
+    localStorage.setItem('scannedItems', JSON.stringify(scannedItems));
+}
+
+function loadScannedItems() {
+    const scannedItemsJson = localStorage.getItem('scannedItems');
+    if (scannedItemsJson) {
+        const loadedItems = JSON.parse(scannedItemsJson);
+        scannedItems.length = 0; // Clear the current array
+        scannedItems.push(...loadedItems); // Push the loaded items
+        totalPrice = calculateTotalPrice(scannedItems); // Recalculate total price
+    }
+}
+
+function calculateTotalPrice(items) {
+    return items.reduce((total, item) => total + item.price, 0);
 }

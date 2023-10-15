@@ -5,36 +5,6 @@ body {
     background-color: #2f8297;
 }
 
-#code-editor {
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    margin: 20px;
-    border-radius: 5px;
-}
-
-#code-input {
-    width: 100%;
-    height: 200px;
-    font-size: 16px;
-    margin-bottom: 10px;
-}
-
-#save-code-button, #load-code-button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px;
-}
-
-#save-code-button:hover, #load-code-button:hover {
-    background-color: #2980b9;
-}
-
 #cashier-interface {
     background-color: #ffffff;
     margin: 20px;
@@ -62,6 +32,47 @@ body {
     margin-bottom: 10px;
 }
 
+#barcode-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#scan-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#scan-button:hover {
+    background-color: #45a049;
+}
+
+#checkout-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#checkout-button:hover {
+    background-color: #2980b9;
+}
+
+#quick-access {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .quick-button {
     background-color: #3498db;
     color: #fff;
@@ -83,7 +94,7 @@ body {
 }
 
 #clear-all-button, #remove-last-order-button {
-    background-color: #E74C3C;
+    background-color: #E74C3C; /* Red color */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -95,5 +106,5 @@ body {
 }
 
 #clear-all-button:hover, #remove-last-order-button:hover {
-    background-color: #C0392B;
+    background-color: #C0392B; /* Darker red on hover */
 }
