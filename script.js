@@ -1,3 +1,31 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const codeInput = document.getElementById('code-input');
+    const saveCodeButton = document.getElementById('save-code-button');
+    const loadCodeButton = document.getElementById('load-code-button');
+
+    // Load the code from localStorage when the page loads
+    const savedCode = localStorage.getItem('savedCode');
+    if (savedCode) {
+        codeInput.value = savedCode;
+    }
+
+    saveCodeButton.addEventListener('click', function () {
+        const code = codeInput.value;
+        localStorage.setItem('savedCode', code);
+        alert('Code saved to localStorage.');
+    });
+
+    loadCodeButton.addEventListener('click', function () {
+        const savedCode = localStorage.getItem('savedCode');
+        if (savedCode) {
+            codeInput.value = savedCode;
+            alert('Code loaded from localStorage.');
+        } else {
+            alert('No code found in localStorage.');
+        }
+    });
+});
+
 const scannedItems = [];
 let totalPrice = 0;
 
@@ -10,7 +38,6 @@ checkoutButton.addEventListener('click', () => {
     resetGame();
 });
 
-// Define a function to add items from quick access buttons
 function addQuickAccessItem(itemName, itemPrice) {
     scannedItems.push({ name: itemName, price: itemPrice });
     totalPrice += itemPrice;
