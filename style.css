@@ -1,22 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
 #cashier-interface {
-    text-align: center;
+    background-color: #fff;
+    margin: 20px;
     padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 #item-list {
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    background-color: #f9f9f9;
-    max-height: 200px;
-    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+#item-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+#item-list ul li {
+    margin-bottom: 5px;
 }
 
 #total-price {
+    font-size: 20px;
     font-weight: bold;
+    margin-bottom: 10px;
 }
 
-button {
+#barcode-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#scan-button {
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
     padding: 10px 20px;
-    margin: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#scan-button:hover {
+    background-color: #45a049;
+}
+
+#checkout-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#checkout-button:hover {
+    background-color: #2980b9;
 }
