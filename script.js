@@ -7,10 +7,15 @@ const barcodeInput = document.getElementById('barcode-input');
 
 // Define a map of barcodes to prices (you can fetch this from a database)
 const barcodeToPriceMap = {
-    "2221": 10.00,
-    "2222": 20.00,
-    "2223": 30.00,
-    "2224": 40.00,
+    "123456": 5.00,
+    "789012": 10.00,
+    "456789": 2.50,
+    "987654": 3.00,
+    "321654": 8.00,
+    "741852": 4.50,
+    "369258": 6.00,
+    "852963": 2.00,
+    // Add more barcode-price pairs as needed
 };
 
 scanButton.addEventListener('click', () => {
@@ -46,3 +51,20 @@ function resetGame() {
     totalPrice = 0;
     updateUI();
 }
+
+// Add an event listener for quick access buttons
+const quickButtons = document.querySelectorAll('.quick-button');
+quickButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const barcode = button.getAttribute('data-barcode');
+        const itemPrice = barcodeToPriceMap[barcode];
+        if (itemPrice) {
+            const itemName = "Item Name"; // Replace with actual item name
+            scannedItems.push({ name: itemName, price: itemPrice });
+            totalPrice += itemPrice;
+            updateUI();
+        } else {
+            alert("Quick access item not found. Please check the barcode.");
+        }
+    });
+});

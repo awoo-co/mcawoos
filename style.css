@@ -66,3 +66,26 @@ body {
 #checkout-button:hover {
     background-color: #2980b9;
 }
+
+
+#quick-access {
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.quick-button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.quick-button:hover {
+    background-color: #2980b9;
+}
