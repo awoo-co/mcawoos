@@ -32,25 +32,11 @@ body {
     margin-bottom: 10px;
 }
 
-#barcode-input {
+#customer-name-input {
     width: 100%;
     padding: 10px;
     font-size: 16px;
     margin-bottom: 10px;
-}
-
-#scan-button {
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#scan-button:hover {
-    background-color: #45a049;
 }
 
 #checkout-button {
@@ -66,7 +52,6 @@ body {
 #checkout-button:hover {
     background-color: #2980b9;
 }
-
 
 #quick-access {
     margin-top: 20px;
@@ -90,13 +75,13 @@ body {
     background-color: #2980b9;
 }
 
-
 #control-buttons {
     margin-top: 20px;
 }
 
-#clear-all-button, #remove-last-order-button {
-    background-color: #E74C3C; /* Red color */
+#clear-all-button,
+#remove-last-order-button {
+    background-color: #E74C3C;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -107,6 +92,7 @@ body {
     margin-bottom: 10px;
 }
 
-#clear-all-button:hover, #remove-last-order-button:hover {
-    background-color: #C0392B; /* Darker red on hover */
+#clear-all-button:hover,
+#remove-last-order-button:hover {
+    background-color: #C0392B;
 }
