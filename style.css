@@ -110,9 +110,9 @@ body {
 }
 
 /* Mobile Responsive Styles */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
     #cashier-interface {
-        margin: 70px;
+        margin: 5px;
         padding: 5px;
     }
 
