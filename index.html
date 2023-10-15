@@ -15,25 +15,27 @@
         <!-- Customer name input text box -->
         <input type="text" id="customer-name-input" placeholder="Enter Customer Name">
         <button id="checkout-button">Checkout</button>
+        <div id="quick-access">
+            <!-- Quick access buttons for foods and items -->
+            <button class="quick-button" onclick="addQuickAccessItem('Burger', 5.00)">Burger</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Pizza', 8.00)">Pizza</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Soda', 2.00)">Soda</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Salad', 4.00)">Salad</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Hot Dog', 3.50)">Hot Dog</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Fries', 2.50)">Fries</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Ice Cream', 3.00)">Ice Cream</button>
+            <button class="quick-button" onclick="addQuickAccessItem('Coffee', 2.00)">Coffee</button>
+            <!-- Add more quick access buttons as needed -->
+        </div>
+   
+        <div id="control-buttons">
+            <button id="clear-all-button" onclick="clearAllItems()">Clear All</button>
+            <button id="remove-last-order-button" onclick="removeLastOrder()">Remove Last Order</button>
+        </div>
     </div>
 
-    <div id="quick-access">
-        <!-- Quick access buttons for foods and items -->
-        <button class="quick-button" onclick="addQuickAccessItem('Burger', 5.00)">Burger</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Pizza', 8.00)">Pizza</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Soda', 2.00)">Soda</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Salad', 4.00)">Salad</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Hot Dog', 3.50)">Hot Dog</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Fries', 2.50)">Fries</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Ice Cream', 3.00)">Ice Cream</button>
-        <button class="quick-button" onclick="addQuickAccessItem('Coffee', 2.00)">Coffee</button>
-        <!-- Add more quick access buttons as needed -->
-    </div>
+    
 
-    <div id="control-buttons">
-        <button id="clear-all-button" onclick="clearAllItems()">Clear All</button>
-        <button id="remove-last-order-button" onclick="removeLastOrder()">Remove Last Order</button>
-    </div>
 
     <script src="script.js"></script>
 </body>
