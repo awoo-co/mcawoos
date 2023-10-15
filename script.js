@@ -4,6 +4,7 @@ let totalPrice = 0;
 const scanButton = document.getElementById('scan-button');
 const checkoutButton = document.getElementById('checkout-button');
 const barcodeInput = document.getElementById('barcode-input');
+const itemNameInput = document.getElementById('item-name-input');
 
 // Define a map of barcodes to prices (you can fetch this from a database)
 const barcodeToPriceMap = {
@@ -20,14 +21,16 @@ const barcodeToPriceMap = {
 
 scanButton.addEventListener('click', () => {
     const barcode = barcodeInput.value;
+    const itemName = itemNameInput.value; // Get the item name from the input box
+
     if (barcode) {
         const itemPrice = barcodeToPriceMap[barcode];
         if (itemPrice) {
-            const itemName = "Item Name"; // Replace with actual item name
             scannedItems.push({ name: itemName, price: itemPrice });
             totalPrice += itemPrice;
             updateUI();
-            barcodeInput.value = ''; // Clear the input field
+            barcodeInput.value = ''; // Clear the barcode input field
+            itemNameInput.value = ''; // Clear the item name input field
         } else {
             alert("Barcode not found. Please check the barcode.");
         }
@@ -37,6 +40,23 @@ scanButton.addEventListener('click', () => {
 checkoutButton.addEventListener('click', () => {
     alert(`Total Price: $${totalPrice.toFixed(2)}`);
     resetGame();
+});
+
+const clearAllButton = document.getElementById('clear-all-button');
+const removeLastOrderButton = document.getElementById('remove-last-order-button');
+
+clearAllButton.addEventListener('click', () => {
+    scannedItems.length = 0;
+    totalPrice = 0;
+    updateUI();
+});
+
+removeLastOrderButton.addEventListener('click', () => {
+    if (scannedItems.length > 0) {
+        const lastItem = scannedItems.pop();
+        totalPrice -= lastItem.price;
+        updateUI();
+    }
 });
 
 function updateUI() {
@@ -51,20 +71,3 @@ function resetGame() {
     totalPrice = 0;
     updateUI();
 }
-
-// Add an event listener for quick access buttons
-const quickButtons = document.querySelectorAll('.quick-button');
-quickButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const barcode = button.getAttribute('data-barcode');
-        const itemPrice = barcodeToPriceMap[barcode];
-        if (itemPrice) {
-            const itemName = "Item Name"; // Replace with actual item name
-            scannedItems.push({ name: itemName, price: itemPrice });
-            totalPrice += itemPrice;
-            updateUI();
-        } else {
-            alert("Quick access item not found. Please check the barcode.");
-        }
-    });
-});
