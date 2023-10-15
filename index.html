@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Grocery Store Cashier Game</title>
+    <title>Cashier Game</title>
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-    <div id="cash-register">
-        <div id="display">
-            <p>Total: $<span id="total">0.00</span></p>
+    <div id="cashier-interface">
+        <div id="item-list">
+            <ul>
+                <!-- List of scanned items goes here -->
+            </ul>
         </div>
-        <video id="webcam" autoplay playsinline></video>
-        <ul id="item-list">
-            <!-- Items will be added here dynamically -->
-        </ul>
-        <button id="classify-veg">Classify as Vegetable</button>
-        <button id="classify-fruit">Classify as Fruit</button>
+        <div id="total-price">Total Price: $0.00</div>
+        <button id="scan-button">Scan Item</button>
+        <button id="checkout-button">Checkout</button>
     </div>
-    <audio id="beep" src="beep.mp3" preload="auto"></audio>
-    <script src="zxing.js"></script>
+
+    <video id="camera-feed" autoplay></video>
+    <button id="capture-button">Capture</button>
+
     <script src="script.js"></script>
 </body>
 </html>
