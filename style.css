@@ -1,0 +1,21 @@
+body{
+    background-color: blue;
+}
+
+#cash-register {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#camera-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Adjust as needed */
+}
+
+#webcam {
+    max-width: 900%;
+    max-height: 900%;
+}
