@@ -1,0 +1,26 @@
+/* Add your styles for the main page here */
+.main-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.tabs {
+    list-style: none;
+    padding: 0;
+    display: flex;
+}
+
+.tabs li {
+    margin: 5px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
