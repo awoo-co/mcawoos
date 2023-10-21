@@ -24,3 +24,11 @@
 .tab-content.active {
     display: block;
 }
+
+
+#sharedTabVideo {
+    max-width: 100%; /* Set the maximum width to the container's width */
+    max-height: 100%; /* Set the maximum height to the container's height */
+    width: auto; /* Allow the width to adjust to maintain the aspect ratio */
+    height: auto; /* Allow the height to adjust to maintain the aspect ratio */
+}
