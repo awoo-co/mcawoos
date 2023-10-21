@@ -57,31 +57,7 @@ checkoutButton.addEventListener('click', () => {
 });
 
 
-window.addEventListener('message', event => {
-    if (event.data.action === 'initiatePayment') {
-        // Handle the payment process here
-        const paymentAmount = totalPrice; // Get the total price from your existing code
-        if (paymentAmount > 0) {
-            // Simulate a successful payment
-            simulatePayment(paymentAmount);
-        } else {
-            alert('No items in the cart.');
-        }
-    }
-});
 
-function simulatePayment(amount) {
-    // Simulate a payment process with fake virtual money
-    const virtualMoney = 100; // Initial virtual money balance
-    if (virtualMoney >= amount) {
-        // Sufficient virtual money
-        virtualMoney -= amount;
-        alert(`Payment successful! Remaining virtual money: $${virtualMoney.toFixed(2)}`);
-        resetGame();
-    } else {
-        alert('Insufficient virtual money. Please add funds.');
-    }
-}
 
 function resetGame() {
     scannedItems.length = 0;
