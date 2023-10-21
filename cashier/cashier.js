@@ -82,3 +82,10 @@ function simulatePayment(amount) {
         alert('Insufficient virtual money. Please add funds.');
     }
 }
+
+function resetGame() {
+    scannedItems.length = 0;
+    totalPrice = 0;
+    document.getElementById('customer-name').value = ''; // Clear the input field
+    updateUI();
+}
