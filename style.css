@@ -38,8 +38,8 @@ button {
 
 button:hover {
     background-color: #cecece;
+    color: black;
 }
-
 
 #customer-name {
     padding: 10px;

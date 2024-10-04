@@ -46,6 +46,7 @@ button {
 
 button:hover {
     background-color: #cecece;
+    color: black;
 }
 
 p {
