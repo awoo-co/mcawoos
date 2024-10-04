@@ -110,30 +110,64 @@ const canvas = document.getElementById('signature-canvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-// Function to start drawing
-canvas.addEventListener('mousedown', (e) => {
+// Function to start drawing (mouse and touch)
+function startDrawing(e) {
     drawing = true;
     ctx.beginPath();
-    ctx.moveTo(e.offsetX, e.offsetY);
-});
+    const { offsetX, offsetY } = getMousePosition(e);
+    ctx.moveTo(offsetX, offsetY);
+}
 
-// Function to draw on the canvas
-canvas.addEventListener('mousemove', (e) => {
+// Function to draw on the canvas (mouse and touch)
+function draw(e) {
     if (drawing) {
-        ctx.lineTo(e.offsetX, e.offsetY);
+        const { offsetX, offsetY } = getMousePosition(e);
+        ctx.lineTo(offsetX, offsetY);
         ctx.stroke();
     }
-});
+}
 
-// Function to stop drawing
-canvas.addEventListener('mouseup', () => {
+// Function to stop drawing (mouse and touch)
+function stopDrawing() {
     drawing = false;
-});
+}
 
 // Function to clear the canvas
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+// Function to get mouse or touch position
+function getMousePosition(e) {
+    let x, y;
+    if (e.touches) {
+        const touch = e.touches[0];
+        x = touch.clientX - canvas.getBoundingClientRect().left;
+        y = touch.clientY - canvas.getBoundingClientRect().top;
+    } else {
+        x = e.offsetX;
+        y = e.offsetY;
+    }
+    return { offsetX: x, offsetY: y };
+}
+
+// Event listeners for mouse
+canvas.addEventListener('mousedown', startDrawing);
+canvas.addEventListener('mousemove', draw);
+canvas.addEventListener('mouseup', stopDrawing);
+canvas.addEventListener('mouseleave', stopDrawing); // Stops drawing if mouse leaves the canvas
+
+// Event listeners for touch
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent scrolling
+    startDrawing(e);
+});
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault(); // Prevent scrolling
+    draw(e);
+});
+canvas.addEventListener('touchend', stopDrawing);
+canvas.addEventListener('touchcancel', stopDrawing);
 
 // Clear canvas on button click
 document.getElementById('clear-canvas-button').addEventListener('click', clearCanvas);
