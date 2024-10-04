@@ -67,8 +67,10 @@ itemAddButtons.forEach(button => {
 // Function to update the UI and display items and total price
 function updateUI() {
     itemList.innerHTML = scannedItems.map((item, index) => 
-        `<li>${item.name}: $${item.price.toFixed(2)} 
-        <button onclick="deleteItem(${index})">Delete</button>
+        `<li id="item-${index}">
+            <span class="item-name" id="item-name-${index}">${item.name}</span>: $<span class="item-price" id="item-price-${index}">${item.price.toFixed(2)}</span> 
+            <button onclick="deleteItem(${index})">Delete</button>
+            <button onclick="editItem(${index})">Edit</button> <!-- Edit button -->
         </li>`
     ).join('');
     totalElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
@@ -79,6 +81,45 @@ function deleteItem(index) {
     totalPrice -= scannedItems[index].price;  // Subtract the price of the deleted item
     scannedItems.splice(index, 1);            // Remove the item from the array
     updateUI();                               // Update the UI to reflect changes
+}
+
+// Function to edit an item (name and price) in the list
+function editItem(index) {
+    const itemElementName = document.getElementById(`item-name-${index}`);
+    const itemElementPrice = document.getElementById(`item-price-${index}`);
+    const currentName = scannedItems[index].name;
+    const currentPrice = scannedItems[index].price.toFixed(2);
+
+    // Replace the item name and price with input fields
+    itemElementName.innerHTML = `<input type="text" id="edit-name-${index}" value="${currentName}">`;
+    itemElementPrice.innerHTML = `<input type="number" id="edit-price-${index}" value="${currentPrice}" min="0" step="0.01">`;
+
+    // Change the edit button to a save button
+    const editButton = document.querySelector(`#item-${index} button[onclick="editItem(${index})"]`);
+    editButton.textContent = "Save";
+    editButton.onclick = () => saveEdit(index); // Call saveEdit instead of editItem when clicked
+}
+
+// Function to save the edited item name and price
+function saveEdit(index) {
+    const newName = document.getElementById(`edit-name-${index}`).value;
+    const newPrice = parseFloat(document.getElementById(`edit-price-${index}`).value);
+
+    if (newName.trim() === "" || isNaN(newPrice) || newPrice <= 0) {
+        alert("Please enter a valid name and price.");
+        return;
+    }
+
+    // Adjust total price by removing old price and adding the new one
+    totalPrice -= scannedItems[index].price;
+    totalPrice += newPrice;
+
+    // Update the item name and price in the scannedItems array
+    scannedItems[index].name = newName;
+    scannedItems[index].price = newPrice;
+
+    // Update the UI with the new name and price
+    updateUI();
 }
 
 // Function to clear all items
