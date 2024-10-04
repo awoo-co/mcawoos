@@ -106,14 +106,23 @@ const canvas = document.getElementById('signature-canvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-// Function to start drawing
+// Function to start drawing (for mouse and touch)
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     ctx.beginPath();
     ctx.moveTo(e.offsetX, e.offsetY);
 });
 
-// Function to draw on the canvas
+canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // Prevent scrolling when drawing
+    drawing = true;
+    const touch = e.touches[0];
+    const rect = canvas.getBoundingClientRect();
+    ctx.beginPath();
+    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+});
+
+// Function to draw on the canvas (for mouse and touch)
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
         ctx.lineTo(e.offsetX, e.offsetY);
@@ -121,8 +130,22 @@ canvas.addEventListener('mousemove', (e) => {
     }
 });
 
-// Function to stop drawing
+canvas.addEventListener('touchmove', (e) => {
+    e.preventDefault();
+    if (drawing) {
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+        ctx.stroke();
+    }
+});
+
+// Function to stop drawing (for mouse and touch)
 canvas.addEventListener('mouseup', () => {
+    drawing = false;
+});
+
+canvas.addEventListener('touchend', () => {
     drawing = false;
 });
 
