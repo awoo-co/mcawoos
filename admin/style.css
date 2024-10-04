@@ -57,7 +57,7 @@ body{
     background-color: #1d1d1d;
 }
 
-#admin{
+#customer{
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
@@ -69,7 +69,7 @@ body{
     right: 20px; /* Adjust the right distance */
 }
 
-#admin:hover {
+#customer:hover {
     background-color: #cecece;
     color: black;
 }
