@@ -24,11 +24,19 @@ function closeConfirmationModal() {
     document.getElementById('confirmation-modal').style.display = 'none';
 }
 
-// Function to confirm purchase
+// Function to confirm purchase with signature check
 function confirmPurchase() {
-    alert("Purchase confirmed! Thank you.");
-    resetGame(); // Clear the items after confirming the purchase
-    closeConfirmationModal();
+    // Check if the canvas is blank (no signature)
+    const blankCanvas = document.createElement('canvas');
+    blankCanvas.width = canvas.width;
+    blankCanvas.height = canvas.height;
+    if (canvas.toDataURL() === blankCanvas.toDataURL()) {
+        alert("Please provide a signature to confirm the order.");
+    } else {
+        alert("Purchase confirmed! Thank you.");
+        resetGame(); // Clear the items after confirming the purchase
+        closeConfirmationModal();
+    }
 }
 
 // Event listener for the checkout button
@@ -85,7 +93,6 @@ function resetGame() {
     updateUI();
 }
 
-
 // Close modal if clicked outside of modal content
 window.onclick = function(event) {
     const modal = document.getElementById('confirmation-modal');
@@ -93,3 +100,33 @@ window.onclick = function(event) {
         closeConfirmationModal();
     }
 };
+
+// Canvas for drawing signature
+const canvas = document.getElementById('signature-canvas');
+const ctx = canvas.getContext('2d');
+let drawing = false;
+
+// Function to start drawing
+canvas.addEventListener('mousedown', (e) => {
+    drawing = true;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+});
+
+// Function to draw on the canvas
+canvas.addEventListener('mousemove', (e) => {
+    if (drawing) {
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke();
+    }
+});
+
+// Function to stop drawing
+canvas.addEventListener('mouseup', () => {
+    drawing = false;
+});
+
+// Function to clear the canvas
+document.getElementById('clear-canvas-button').addEventListener('click', () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
