@@ -84,3 +84,12 @@ function resetGame() {
     document.getElementById('customer-name').value = ''; // Clear the input field
     updateUI();
 }
+
+
+// Close modal if clicked outside of modal content
+window.onclick = function(event) {
+    const modal = document.getElementById('confirmation-modal');
+    if (event.target === modal) {
+        closeConfirmationModal();
+    }
+};
