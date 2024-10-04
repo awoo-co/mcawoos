@@ -153,3 +153,16 @@ canvas.addEventListener('touchend', () => {
 document.getElementById('clear-canvas-button').addEventListener('click', () => {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 });
+
+// Register the Service Worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./service-worker.js')
+            .then((registration) => {
+                console.log('Service Worker registered with scope:', registration.scope);
+            })
+            .catch((error) => {
+                console.error('Service Worker registration failed:', error);
+            });
+    });
+}
