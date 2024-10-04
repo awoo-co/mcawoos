@@ -1,36 +1,28 @@
-/* Add your styles for the main page here */
-.main-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+/* Add your styles for the cashier interface here */
+.cashier-interface {
+    background-color: #1d1d1d;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    text-align: center;
 }
 
-.tabs {
+h1 {
+    font-size: 24px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #fff;
+}
+
+ul {
     list-style: none;
     padding: 0;
-    display: flex;
+    color: #fff;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-.tabs li {
-    margin: 5px;
-}
-
-.tab-content {
-    display: none;
-}
-
-.tab-content.active {
-    display: block;
-}
-
-
-#sharedTabVideo {
-    max-width: 100%; /* Set the maximum width to the container's width */
-    max-height: 100%; /* Set the maximum height to the container's height */
-    width: auto; /* Allow the width to adjust to maintain the aspect ratio */
-    height: auto; /* Allow the height to adjust to maintain the aspect ratio */
+li {
+    margin-bottom: 10px;
 }
 
 button {
@@ -49,13 +41,13 @@ button:hover {
     color: black;
 }
 
-p {
-    font-size: 24px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color: #fff;
+#customer-name {
+    padding: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
 }
 
-h1 {
+p {
     font-size: 24px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     color: #fff;
@@ -63,4 +55,21 @@ h1 {
 
 body{
     background-color: #1d1d1d;
+}
+
+#admin{
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #5f5f5f;
+    color: #fff;
+    font-size: 16px;
+    position: absolute;
+    top: 20px;  /* Adjust the top distance */
+    right: 20px; /* Adjust the right distance */
+}
+
+#admin:hover {
+    background-color: #cecece;
+    color: black;
 }

@@ -1,31 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>cashier interface</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>cashier2</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-   
-    <div class="cashier-interface">
-        <h1>Cashier Interface</h1>
-        <ul id="item-list">
-            <!-- List of scanned items goes here -->
-        </ul>
-        <!-- Add this input for entering the customer name -->
-        <input type="text" id="customer-name" placeholder="Enter Customer Name">
-        <button id="checkout-button">Checkout</button>
-        <p id="total-price">Total Price: $0.00</p>
-        
-        <!-- Quick access buttons for foods and items -->
-        <button class="food-button" data-item="Burger" data-price="20.00">Burger</button>
-        <button class="food-button" data-item="pizza" data-price="50.00">pizza</button>
-        <button class="food-button" data-item="salad" data-price="40.00">salad</button>
-        <button class="food-button" data-item="cake" data-price="15.00">cake</button>
-        <button class="food-button" data-item="candy" data-price="5.00">candy</button>
-        <button class="food-button" data-item="drinks" data-price="2.14">drinks</button>
-        <button class="food-button" data-item="cake pop" data-price="1.00">cake pop</button>
-        <button class="food-button" data-item="ice cream" data-price="80.00">ice cream</button>
-        <button id="admin" onclick="window.location.href='admin/index.html';">for admins go to Admin Page</button>
+    <h1>Share Tab</h1>
+    <p>share tab to begin sharing with the customer</p>
+    <button id="startSharing">Start Sharing</button>
+    <video id="sharedTabVideo" autoplay playsinline controls style="display: none;"></video>
     <script src="script.js"></script>
+    <button id="customer" onclick="window.location.href='/index.html';">for customers go to customer Page</button>
 </body>
 </html>
