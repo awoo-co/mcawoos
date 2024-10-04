@@ -11,6 +11,9 @@ function openConfirmationModal() {
     const modal = document.getElementById('confirmation-modal');
     const modalContent = document.getElementById('modal-content');
     
+    // Clear the canvas and signature
+    clearCanvas();
+
     // Display the customer name and list of scanned items
     const customerName = document.getElementById('customer-name').value;
     const itemsList = scannedItems.map(item => `${item.name}: $${item.price.toFixed(2)}`).join('\n');
@@ -90,6 +93,7 @@ function resetGame() {
     scannedItems.length = 0;
     totalPrice = 0;
     document.getElementById('customer-name').value = ''; // Clear the input field
+    clearCanvas(); // Clear the canvas
     updateUI();
 }
 
@@ -106,23 +110,14 @@ const canvas = document.getElementById('signature-canvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-// Function to start drawing (for mouse and touch)
+// Function to start drawing
 canvas.addEventListener('mousedown', (e) => {
     drawing = true;
     ctx.beginPath();
     ctx.moveTo(e.offsetX, e.offsetY);
 });
 
-canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent scrolling when drawing
-    drawing = true;
-    const touch = e.touches[0];
-    const rect = canvas.getBoundingClientRect();
-    ctx.beginPath();
-    ctx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
-});
-
-// Function to draw on the canvas (for mouse and touch)
+// Function to draw on the canvas
 canvas.addEventListener('mousemove', (e) => {
     if (drawing) {
         ctx.lineTo(e.offsetX, e.offsetY);
@@ -130,39 +125,15 @@ canvas.addEventListener('mousemove', (e) => {
     }
 });
 
-canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (drawing) {
-        const touch = e.touches[0];
-        const rect = canvas.getBoundingClientRect();
-        ctx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
-        ctx.stroke();
-    }
-});
-
-// Function to stop drawing (for mouse and touch)
+// Function to stop drawing
 canvas.addEventListener('mouseup', () => {
     drawing = false;
 });
 
-canvas.addEventListener('touchend', () => {
-    drawing = false;
-});
-
 // Function to clear the canvas
-document.getElementById('clear-canvas-button').addEventListener('click', () => {
+function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-});
-
-// Register the Service Worker
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./service-worker.js')
-            .then((registration) => {
-                console.log('Service Worker registered with scope:', registration.scope);
-            })
-            .catch((error) => {
-                console.error('Service Worker registration failed:', error);
-            });
-    });
 }
+
+// Clear canvas on button click
+document.getElementById('clear-canvas-button').addEventListener('click', clearCanvas);
