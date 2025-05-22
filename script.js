@@ -64,6 +64,27 @@ itemAddButtons.forEach(button => {
     });
 });
 
+// Custom item add functionality
+document.getElementById('item-enter').addEventListener('click', () => {
+    const nameInput = document.getElementById('custom-item-name');
+    const priceInput = document.getElementById('custom-item-price');
+    const itemName = nameInput.value.trim();
+    const itemPrice = parseFloat(priceInput.value);
+
+    if (itemName === "" || isNaN(itemPrice) || itemPrice <= 0) {
+        alert("Please enter a valid item name and price.");
+        return;
+    }
+
+    scannedItems.push({ name: itemName, price: itemPrice });
+    totalPrice += itemPrice;
+    updateUI();
+
+    // Clear inputs after adding
+    nameInput.value = '';
+    priceInput.value = '';
+});
+
 // Function to update the UI and display items and total price
 function updateUI() {
     itemList.innerHTML = scannedItems.map((item, index) => 

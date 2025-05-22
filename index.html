@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Cashier</title>
-        <link rel="icon" type="image/png" href="favicon-16x16.png">
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
-        <link rel="stylesheet" type="text/css" href="style.css">
-        <link rel="shortcut icon" href="https://teslakitty-cdn.netlify.app/favicon.ico" type="image/x-icon">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cashier</title>
+    <link rel="icon" type="image/png" href="favicon-16x16.png">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="shortcut icon" href="https://teslakitty-cdn.netlify.app/favicon.ico" type="image/x-icon">
 </head>    
 <body>
 
     <div class="cashier-interface">
         <h1>Cashier Interface</h1>
-        <h1>This page can be also used for single use only</h1>
+        <h2>Point of Sale System</h2>
         <ul id="item-list">
             <!-- List of scanned items goes here -->
         </ul>
@@ -22,10 +22,13 @@
         <button id="checkout-button">Checkout</button>
         <p id="total-price">Total Price: $0.00</p>
         
-          <input type="text" id="item-box placeholder="Enter food Name here">
-          <button id="item-enter">enter</button>
+        <!-- Custom item input fields -->
+        <input type="text" id="custom-item-name" placeholder="Enter food name" class="custom-item-input">
+        <input type="number" id="custom-item-price" placeholder="Enter price" min="0" step="0.01" class="custom-item-input">
+        <button id="item-enter">Enter</button>
+
         <!-- Quick access buttons for foods and items -->
-        <h2>Quick Access buttons</h2>
+        <h2>Quick Access Buttons</h2>
         <button class="food-button" data-item="Burger" data-price="20.00">Burger</button>
         <button class="food-button" data-item="Pizza" data-price="50.00">Pizza</button>
         <button class="food-button" data-item="Salad" data-price="40.00">Salad</button>
@@ -36,11 +39,6 @@
         <button class="food-button" data-item="Ice Cream" data-price="80.00">Ice Cream</button>
         <button class="food-button" data-item="cookie" data-price="3.00">cookie</button>
         <button class="food-button" data-item="popcorn" data-price="25.00">popcorn</button>
-    </div>
-
-    <div class="item-box">
-          <!-- Input for entering the customer name -->
-      
     </div>
 
     <!-- Confirmation modal -->
