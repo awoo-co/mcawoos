@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Display</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="cashier-interface">
+        <h2>Order Summary</h2>
+        <ul id="display-list"></ul>
+        <p id="display-total"></p>
+    </div>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+        const supabaseUrl = 'https://usumxybsghpzwirzraow.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzdW14eWJzZ2hwendpcnpyYW93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5NTI5NjgsImV4cCI6MjA2MzUyODk2OH0.Kb9e26m4147sG0rRrPsMouIR-7pIS6q5uZqXpbX8-5U';
+        const supabase = createClient(supabaseUrl, supabaseKey);
+
+        async function fetchCart() {
+            const { data } = await supabase.from('cart').select('*').eq('id', 1).single();
+            updateDisplay(data);
+        }
+
+        function updateDisplay(cart) {
+            if (!cart) return;
+            document.getElementById('display-list').innerHTML =
+                cart.items.map(item => `<li>${item.name}: $${item.price.toFixed(2)}</li>`).join('');
+            document.getElementById('display-total').textContent =
+                `Total: $${cart.total.toFixed(2)}`;
+        }
+
+        // Listen for real-time changes
+        supabase
+            .channel('cart-changes')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'cart' }, payload => {
+                updateDisplay(payload.new);
+            })
+            .subscribe();
+
+        // Initial fetch
+        fetchCart();
+    </script>
+</body>
+</html>

@@ -1,3 +1,11 @@
+// --- Supabase Setup ---
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const supabaseUrl = 'https://usumxybsghpzwirzraow.supabase.co'; // <-- Replace with your Supabase URL
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVzdW14eWJzZ2hwendpcnpyYW93Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDc5NTI5NjgsImV4cCI6MjA2MzUyODk2OH0.Kb9e26m4147sG0rRrPsMouIR-7pIS6q5uZqXpbX8-5U'; // <-- Replace with your Supabase anon key
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// --- Cashier Logic ---
 const scannedItems = [];
 let totalPrice = 0;
 
@@ -6,18 +14,25 @@ const itemAddButtons = document.querySelectorAll('.food-button');
 const itemList = document.getElementById('item-list');
 const totalElement = document.getElementById('total-price');
 
+// Sync cart to Supabase
+async function syncCartToSupabase() {
+    await supabase
+        .from('cart')
+        .update({
+            items: scannedItems,
+            total: totalPrice
+        })
+        .eq('id', 1);
+}
+
 // Function to open the confirmation modal
 function openConfirmationModal() {
     const modal = document.getElementById('confirmation-modal');
     const modalContent = document.getElementById('modal-content');
-    
-    // Clear the canvas and signature
     clearCanvas();
 
-    // Display the customer name and list of scanned items
     const customerName = document.getElementById('customer-name').value;
     const itemsList = scannedItems.map(item => `${item.name}: $${item.price.toFixed(2)}`).join('\n');
-    
     modalContent.textContent = `Customer Name: ${customerName}\nItems:\n${itemsList}\nTotal Price: $${totalPrice.toFixed(2)}`;
     modal.style.display = 'block';
 }
@@ -29,7 +44,6 @@ function closeConfirmationModal() {
 
 // Function to confirm purchase with signature check
 function confirmPurchase() {
-    // Check if the canvas is blank (no signature)
     const blankCanvas = document.createElement('canvas');
     blankCanvas.width = canvas.width;
     blankCanvas.height = canvas.height;
@@ -37,7 +51,7 @@ function confirmPurchase() {
         alert("Please provide a signature to confirm the order.");
     } else {
         alert("Purchase confirmed! Thank you.");
-        resetGame(); // Clear the items after confirming the purchase
+        resetGame();
         closeConfirmationModal();
     }
 }
@@ -80,7 +94,6 @@ document.getElementById('item-enter').addEventListener('click', () => {
     totalPrice += itemPrice;
     updateUI();
 
-    // Clear inputs after adding
     nameInput.value = '';
     priceInput.value = '';
 });
@@ -91,38 +104,37 @@ function updateUI() {
         `<li id="item-${index}">
             <span class="item-name" id="item-name-${index}">${item.name}</span>: $<span class="item-price" id="item-price-${index}">${item.price.toFixed(2)}</span> 
             <button onclick="deleteItem(${index})">Delete</button>
-            <button onclick="editItem(${index})">Edit</button> <!-- Edit button -->
+            <button onclick="editItem(${index})">Edit</button>
         </li>`
     ).join('');
     totalElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+    syncCartToSupabase();
 }
 
 // Function to delete an item from the list
-function deleteItem(index) {
-    totalPrice -= scannedItems[index].price;  // Subtract the price of the deleted item
-    scannedItems.splice(index, 1);            // Remove the item from the array
-    updateUI();                               // Update the UI to reflect changes
+window.deleteItem = function(index) {
+    totalPrice -= scannedItems[index].price;
+    scannedItems.splice(index, 1);
+    updateUI();
 }
 
 // Function to edit an item (name and price) in the list
-function editItem(index) {
+window.editItem = function(index) {
     const itemElementName = document.getElementById(`item-name-${index}`);
     const itemElementPrice = document.getElementById(`item-price-${index}`);
     const currentName = scannedItems[index].name;
     const currentPrice = scannedItems[index].price.toFixed(2);
 
-    // Replace the item name and price with input fields
     itemElementName.innerHTML = `<input type="text" id="edit-name-${index}" value="${currentName}">`;
     itemElementPrice.innerHTML = `<input type="number" id="edit-price-${index}" value="${currentPrice}" min="0" step="0.01">`;
 
-    // Change the edit button to a save button
     const editButton = document.querySelector(`#item-${index} button[onclick="editItem(${index})"]`);
     editButton.textContent = "Save";
-    editButton.onclick = () => saveEdit(index); // Call saveEdit instead of editItem when clicked
+    editButton.onclick = () => saveEdit(index);
 }
 
 // Function to save the edited item name and price
-function saveEdit(index) {
+window.saveEdit = function(index) {
     const newName = document.getElementById(`edit-name-${index}`).value;
     const newPrice = parseFloat(document.getElementById(`edit-price-${index}`).value);
 
@@ -131,15 +143,12 @@ function saveEdit(index) {
         return;
     }
 
-    // Adjust total price by removing old price and adding the new one
     totalPrice -= scannedItems[index].price;
     totalPrice += newPrice;
 
-    // Update the item name and price in the scannedItems array
     scannedItems[index].name = newName;
     scannedItems[index].price = newPrice;
 
-    // Update the UI with the new name and price
     updateUI();
 }
 
@@ -154,8 +163,8 @@ function clearAllItems() {
 function resetGame() {
     scannedItems.length = 0;
     totalPrice = 0;
-    document.getElementById('customer-name').value = ''; // Clear the input field
-    clearCanvas(); // Clear the canvas
+    document.getElementById('customer-name').value = '';
+    clearCanvas();
     updateUI();
 }
 
@@ -172,7 +181,6 @@ const canvas = document.getElementById('signature-canvas');
 const ctx = canvas.getContext('2d');
 let drawing = false;
 
-// Function to start drawing (mouse and touch)
 function startDrawing(e) {
     drawing = true;
     ctx.beginPath();
@@ -180,7 +188,6 @@ function startDrawing(e) {
     ctx.moveTo(offsetX, offsetY);
 }
 
-// Function to draw on the canvas (mouse and touch)
 function draw(e) {
     if (drawing) {
         const { offsetX, offsetY } = getMousePosition(e);
@@ -189,17 +196,14 @@ function draw(e) {
     }
 }
 
-// Function to stop drawing (mouse and touch)
 function stopDrawing() {
     drawing = false;
 }
 
-// Function to clear the canvas
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-// Function to get mouse or touch position
 function getMousePosition(e) {
     let x, y;
     if (e.touches) {
@@ -213,23 +217,20 @@ function getMousePosition(e) {
     return { offsetX: x, offsetY: y };
 }
 
-// Event listeners for mouse
 canvas.addEventListener('mousedown', startDrawing);
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', stopDrawing);
-canvas.addEventListener('mouseleave', stopDrawing); // Stops drawing if mouse leaves the canvas
+canvas.addEventListener('mouseleave', stopDrawing);
 
-// Event listeners for touch
 canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Prevent scrolling
+    e.preventDefault();
     startDrawing(e);
 });
 canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault(); // Prevent scrolling
+    e.preventDefault();
     draw(e);
 });
 canvas.addEventListener('touchend', stopDrawing);
 canvas.addEventListener('touchcancel', stopDrawing);
 
-// Clear canvas on button click
 document.getElementById('clear-canvas-button').addEventListener('click', clearCanvas);
