@@ -3,7 +3,7 @@
 <head>
     <title>Customer Display</title>
     <link rel="stylesheet" href="style.css">
-        <link rel="shortcut icon" href="https://teslakitty-cdn.netlify.app/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="https://teslakitty-cdn.netlify.app/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="cashier-interface">
@@ -43,6 +43,9 @@
 
         // Initial fetch
         fetchCart();
+
+        // Poll every 5 seconds as a fallback
+        setInterval(fetchCart, 5000);
     </script>
 </body>
 </html>

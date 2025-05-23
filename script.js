@@ -16,13 +16,17 @@ const totalElement = document.getElementById('total-price');
 
 // Sync cart to Supabase
 async function syncCartToSupabase() {
-    await supabase
+    console.log("syncCartToSupabase called");
+    const { error } = await supabase
         .from('cart')
         .update({
             items: scannedItems,
             total: totalPrice
         })
         .eq('id', 1);
+    if (error) {
+        console.error("Supabase update error:", error);
+    }
 }
 
 // Function to open the confirmation modal
