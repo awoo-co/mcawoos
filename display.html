@@ -23,11 +23,13 @@
         }
 
         function updateDisplay(cart) {
+            console.log("Cart data from Supabase:", cart); // Debug line
             if (!cart) return;
+            const items = Array.isArray(cart.items) ? cart.items : [];
             document.getElementById('display-list').innerHTML =
-                cart.items.map(item => `<li>${item.name}: $${item.price.toFixed(2)}</li>`).join('');
+                items.map(item => `<li>${item.name}: $${item.price.toFixed(2)}</li>`).join('');
             document.getElementById('display-total').textContent =
-                `Total: $${cart.total.toFixed(2)}`;
+                `Total: $${cart.total?.toFixed(2) ?? "0.00"}`;
         }
 
         // Listen for real-time changes

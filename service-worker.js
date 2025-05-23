@@ -3,24 +3,28 @@
 const CACHE_NAME = 'cashier-cache-v1';
 const ASSETS_TO_CACHE = [
     './', // Cache the root directory
-    './index.html', // Cache the main HTML file
-    './style.css', // Cache the CSS file
-    './script.js', // Cache the JavaScript file
-    './favicon.ico', // Cache the favicon
-    './favicon-16x16.png', // Cache the 16x16 favicon
+    './index.html', // Main HTML file
+    './style.css', // CSS file
+    './script.js', // JavaScript file
+    './favicon.ico', // Favicon
+    './favicon-16x16.png', // 16x16 favicon
+    './display.html', // Customer display HTML
     // Add other assets (images, fonts, etc.) if necessary
 ];
 
-// Install event
+// Install event: cache all required assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS_TO_CACHE);
+            return cache.addAll(ASSETS_TO_CACHE).catch((err) => {
+                // If any file fails, log the error but continue
+                console.error('Service Worker cache addAll error:', err);
+            });
         })
     );
 });
 
-// Fetch event
+// Fetch event: serve cached assets if available, else fetch from network
 self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
@@ -29,7 +33,7 @@ self.addEventListener('fetch', (event) => {
     );
 });
 
-// Activate event
+// Activate event: clean up old caches
 self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
