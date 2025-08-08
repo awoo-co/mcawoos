@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tip</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="https://awoo-co-cdn.netlify.app/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <h1>Add a Tip</h1>
+    <button onclick="addTip(0)">No Tip</button>
+    <button onclick="addTip(5)">$5</button>
+    <button onclick="addTip(10)">$10</button>
+    <script>
+        function addTip(tipAmount) {
+            window.parent.postMessage({ type: 'tip_selected', tip: tipAmount }, '*');
+        }
+    </script>
+</body>
+</html>

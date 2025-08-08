@@ -9,6 +9,7 @@ const ASSETS_TO_CACHE = [
     './favicon.ico', // Favicon
     './favicon-16x16.png', // 16x16 favicon
     './display.html', // Customer display HTML
+    './tip.html',
     // Add other assets (images, fonts, etc.) if necessary
 ];
 

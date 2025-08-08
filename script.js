@@ -8,11 +8,15 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 // --- Cashier Logic ---
 const scannedItems = [];
 let totalPrice = 0;
+let tipAmount = 0; // Initialize tip amount
 
 const checkoutButton = document.getElementById('checkout-button');
 const itemAddButtons = document.querySelectorAll('.food-button');
 const itemList = document.getElementById('item-list');
 const totalElement = document.getElementById('total-price');
+const confirmationModal = document.getElementById('confirmation-modal');
+const checkoutModalContent = document.getElementById('checkout-modal-content');
+const tipModalIframe = document.getElementById('tip-modal-iframe');
 
 // Sync cart to Supabase
 async function syncCartToSupabase() {
@@ -21,7 +25,7 @@ async function syncCartToSupabase() {
         .from('cart')
         .update({
             items: scannedItems,
-            total: totalPrice
+            total: totalPrice + tipAmount // Include tip in the total
         })
         .eq('id', 1);
     if (error) {
@@ -31,19 +35,18 @@ async function syncCartToSupabase() {
 
 // Function to open the confirmation modal
 function openConfirmationModal() {
-    const modal = document.getElementById('confirmation-modal');
-    const modalContent = document.getElementById('modal-content');
     clearCanvas();
-
     const customerName = document.getElementById('customer-name').value;
     const itemsList = scannedItems.map(item => `${item.name}: $${item.price.toFixed(2)}`).join('\n');
-    modalContent.textContent = `Customer Name: ${customerName}\nItems:\n${itemsList}\nTotal Price: $${totalPrice.toFixed(2)}`;
-    modal.style.display = 'block';
+    document.getElementById('modal-content').textContent = `Customer Name: ${customerName}\nItems:\n${itemsList}\nSubtotal: $${totalPrice.toFixed(2)}\nTip: $${tipAmount.toFixed(2)}\nTotal Price: $${(totalPrice + tipAmount).toFixed(2)}`;
+    confirmationModal.style.display = 'block';
 }
 
 // Function to close the confirmation modal
 function closeConfirmationModal() {
-    document.getElementById('confirmation-modal').style.display = 'none';
+    confirmationModal.style.display = 'none';
+    checkoutModalContent.style.display = 'block';
+    tipModalIframe.style.display = 'none';
 }
 
 // Function to confirm purchase with signature check
@@ -62,7 +65,10 @@ function confirmPurchase() {
 
 // Event listener for the checkout button
 checkoutButton.addEventListener('click', () => {
-    openConfirmationModal();
+    // Hide the checkout content and show the tip iframe
+    checkoutModalContent.style.display = 'none';
+    tipModalIframe.style.display = 'block';
+    confirmationModal.style.display = 'block';
 });
 
 // Event listener for cancel button (No)
@@ -111,7 +117,7 @@ function updateUI() {
             <button onclick="editItem(${index})">Edit</button>
         </li>`
     ).join('');
-    totalElement.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+    totalElement.textContent = `Total Price: $${(totalPrice + tipAmount).toFixed(2)}`;
     syncCartToSupabase();
 }
 
@@ -160,6 +166,7 @@ window.saveEdit = function(index) {
 function clearAllItems() {
     scannedItems.length = 0;
     totalPrice = 0;
+    tipAmount = 0; // Clear tip
     updateUI();
 }
 
@@ -167,6 +174,7 @@ function clearAllItems() {
 function resetGame() {
     scannedItems.length = 0;
     totalPrice = 0;
+    tipAmount = 0; // Clear tip
     document.getElementById('customer-name').value = '';
     clearCanvas();
     updateUI();
@@ -238,3 +246,13 @@ canvas.addEventListener('touchend', stopDrawing);
 canvas.addEventListener('touchcancel', stopDrawing);
 
 document.getElementById('clear-canvas-button').addEventListener('click', clearCanvas);
+
+// Message listener for tip iframe
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'tip_selected') {
+        tipAmount = parseFloat(event.data.tip);
+        updateUI();
+        document.getElementById('tip-modal-iframe').style.display = 'none';
+        document.getElementById('checkout-modal-content').style.display = 'block';
+    }
+});
