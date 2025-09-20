@@ -6,8 +6,7 @@ const ASSETS_TO_CACHE = [
     './index.html', // Main HTML file
     './style.css', // CSS file
     './script.js', // JavaScript file
-    './favicon.ico', // Favicon
-    './favicon-16x16.png', // 16x16 favicon
+    './https://awoo-co.github.io/cdn/favicon.ico', // Favicon
     './display.html', // Customer display HTML
     './tip.html',
     // Add other assets (images, fonts, etc.) if necessary
